@@ -1,0 +1,14 @@
+node_modules/
+test/
+dist/
+docker/
+src/**/*.spec.ts
+.git/
+.husky/
+.nx/
+.github/
+.gitignore
+.npmrc
+.nvmrc
+.commitlintrc.json
+.editorconfig

@@ -1,0 +1,88 @@
+{
+  "name": "@nestjs-microservices/source",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": "github.com/pashamakhilkumarreddy/nestjs-microservices",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "start": "npx nx serve api-gateway",
+    "start:auth": "npx nx serve auth-microservice",
+    "start:payments": "npx nx serve payments-microservice",
+    "format": "prettier --config ./.prettierrc --no-editorconfig '{src,test}/**/*.{js,ts,md,json}' --check",
+    "format:fix": "prettier --config ./.prettierrc --no-editorconfig --ignore-unknown '{src,test}/**/*.{js,ts,md,json}' --write",
+    "lint": "eslint '{src,test}/**/*.{js,ts,json}' --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint '{src,test}/**/*.{js,ts,json}' --fix --report-unused-disable-directives --max-warnings 0",
+    "prepare": "husky",
+    "docker:start": "echo '=> Running docker...' && export NODE_ENV=production && export ApiImageTag=$(node -e 'console.info(`${process.env.npm_package_name}:${process.env.npm_package_version}`);') && docker compose -f docker-compose.yml up --build",
+    "docker:stop": "echo '=> Stopping docker services' && docker compose --file docker-compose.yml stop",
+    "docker:clean": "echo '=> Deleting docker services' && docker compose --file docker-compose.yml down --volumes --rmi all"
+  },
+  "private": true,
+  "dependencies": {
+    "@nestjs/common": "^10.0.2",
+    "@nestjs/config": "^3.2.2",
+    "@nestjs/core": "^10.0.2",
+    "@nestjs/microservices": "^10.3.8",
+    "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/swagger": "^7.3.1",
+    "axios": "^1.6.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "kafkajs": "^2.2.4",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@nestjs/schematics": "^10.0.1",
+    "@nestjs/testing": "^10.0.2",
+    "@nx/eslint": "19.1.0",
+    "@nx/eslint-plugin": "19.1.0",
+    "@nx/jest": "19.1.0",
+    "@nx/js": "19.1.0",
+    "@nx/nest": "19.1.0",
+    "@nx/node": "19.1.0",
+    "@nx/web": "19.1.0",
+    "@nx/webpack": "19.1.0",
+    "@nx/workspace": "19.1.0",
+    "@swc-node/register": "~1.8.0",
+    "@swc/core": "~1.3.85",
+    "@swc/helpers": "~0.5.2",
+    "@types/jest": "^29.4.0",
+    "@types/node": "~18.16.9",
+    "@typescript-eslint/eslint-plugin": "^7.3.0",
+    "@typescript-eslint/parser": "^7.3.0",
+    "eslint": "~8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-no-comments": "^1.1.10",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "jest": "^29.4.1",
+    "jest-environment-node": "^29.4.1",
+    "lint-staged": "^15.2.5",
+    "nx": "19.1.0",
+    "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "typescript": "~5.4.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.!(*spec).{ts,js,json}": [
+      "npm run lint:fix",
+      "prettier --write --no-editorconfig"
+    ],
+    "*.md": [
+      "prettier --write --no-editorconfig"
+    ]
+  }
+}
